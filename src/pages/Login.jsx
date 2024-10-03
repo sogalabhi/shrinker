@@ -36,6 +36,7 @@ export default function Login() {
         const json = await response.json()
         if (json) {
             localStorage.setItem('authToken', json.token);
+            console.log(json.token)
             navigate("/");
         }
     };

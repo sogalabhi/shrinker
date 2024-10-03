@@ -13,7 +13,9 @@ router.post('/createlink', [
     try {
         let user = req.user.id;
         let { original, short } = req.body;
-
+        if(!original.includes("https://")){
+            original = "https://"+original
+        }
         if (!short) {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             let short = '';
@@ -21,7 +23,7 @@ router.post('/createlink', [
             for (let i = 0; i < length; i++) {
                 short += characters.charAt(Math.floor(Math.random() * characters.length));
             }
-
+            
             const link = new Link({
                 original,
                 short,
@@ -29,7 +31,7 @@ router.post('/createlink', [
                 visits:0
             })
             const saveLink = await link.save();
-            res.json({ saveLink })
+            res.json(saveLink)
         }
         else {
             let l = await Link.findOne({ short: req.body.short });

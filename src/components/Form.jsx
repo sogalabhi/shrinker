@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Form({ token }) {
+export default function Form({ row, setrow }) {
     const [formData, setFormData] = useState({
         original: '',
         short: ''
@@ -13,12 +13,11 @@ export default function Form({ token }) {
         console.log('Short Link:', formData.short);
 
         const token = localStorage.getItem('authToken');
-        
+
         const raw = JSON.stringify(formData);
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", " application/json");
-        console.log(token)
         myHeaders.append("auth-token", token);
         const requestOptions = {
             method: "POST",
@@ -27,10 +26,10 @@ export default function Form({ token }) {
             redirect: "follow"
         };
 
-        fetch("http://localhost:3000/api/links/createlink", requestOptions)
-            .then((response) => response.text())
-            .then((result) => console.log(result))
-            .catch((error) => console.error(error))
+        const response = await fetch("http://localhost:3000/api/links/createlink", requestOptions).catch((error) => console.error(error))
+        const json = await response.json()
+        console.log(json)
+        setrow([...row, json])
     };
 
 
