@@ -45,7 +45,7 @@ router.post('/createlink', [
                 visits:0
             })
             const saveLink = await link.save();
-            res.json({ saveLink })
+            res.json( saveLink )
         }
 
     } catch (error) {
@@ -74,7 +74,7 @@ router.put('/updatelink/:id', fetchuser, async (req, res) => {
         if (short) {
             let l = await Link.findOne({ short });
             if (l) {
-                return res.status(400).json({ error: "Shortened url already exists" });
+                return res.status(400).json({ error: "Shortened url already exists", short:l });    
             }
             else {
                 newLink.short = short
@@ -89,7 +89,7 @@ router.put('/updatelink/:id', fetchuser, async (req, res) => {
         }
 
         link = await Link.findByIdAndUpdate(req.params.id, { $set: newLink }, { new: true });
-        res.send({ link });
+        res.send(link);
     } catch (error) {
         res.status(500).send({ error })
     }

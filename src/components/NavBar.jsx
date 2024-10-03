@@ -11,7 +11,7 @@ export default function Navbar() {
         <nav className="bg-gray-800 p-4">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
-                <div className="text-white text-lg font-bold">MyLogo</div>
+                <div className="text-white text-lg font-bold">Shrinker</div>
 
                 {/* Hamburger Menu for mobile */}
                 <div className="lg:hidden">
