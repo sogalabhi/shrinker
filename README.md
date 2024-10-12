@@ -57,3 +57,10 @@ To set up the project locally, follow these steps:
     ```
 
     The frontend will run on `http://localhost:5173` and the backend on `http://localhost:3000`.
+
+## VIdeo demo
+
+
+https://github.com/user-attachments/assets/bdc04547-d5e5-4ffd-b3e6-eed7baf14db9
+
+
