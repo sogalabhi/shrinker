@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-export default  function Register() {
+export default function Register() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, seterror] = useState("")
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,8 +35,17 @@ export default  function Register() {
             redirect: "follow"
         };
         console.log(raw)
-        const response = fetch("http://localhost:3000/api/auth/createuser", requestOptions).catch((error) => console.error(error));
+        const response = await fetch("http://localhost:3000/api/auth/createuser", requestOptions).catch((error) => console.error(error));
         const json = await response.json();
+        console.log(json)
+        if (json.token) {
+            localStorage.setItem('authToken', json.token);
+            console.log(json.token)
+            navigate("/");
+        }
+        else {
+            seterror(json.error)
+        }
     };
 
     return (
@@ -87,14 +97,19 @@ export default  function Register() {
                             required
                         />
                     </div>
-
-                    <div className="flex items-center justify-between">
+                    <p>{error}</p>
+                    <div className="flex flex-col items-center justify-between">
                         <button
                             type="submit"
                             className="bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 hover:bg-indigo-600"
                         >
                             Sign up
                         </button>
+                        <Link to="/login"
+                            className=" font-bold py-2 px-4 rounded"
+                        >
+                            Login
+                        </Link>
                     </div>
                 </form>
             </div>
